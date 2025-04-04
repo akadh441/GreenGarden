@@ -12,7 +12,103 @@
             background: #F5F5F5;
         }
 
-  
+  <style>
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        color: white;
+        padding: 15px 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+    }
+
+    .toggle-button {
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 10px 15px;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .toggle-button:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    .brand {
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 15px;
+        border-radius: 20px;
+        transition: 0.3s;
+    }
+
+    .search-bar:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .search-bar input {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        padding: 8px;
+        width: 220px;
+        background: transparent;
+        color: white;
+    }
+
+    .search-bar input::placeholder {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .search-bar button {
+        border: none;
+        background: none;
+        font-size: 18px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .search-bar button:hover {
+        color: #FFEB3B;
+    }
+
+    .back-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -71,7 +167,7 @@
             font-weight: bold;
         }
 
-        /* Sidebar Menu */
+       
         .menu {
             display: none;
             position: fixed;

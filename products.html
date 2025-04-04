@@ -3,211 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
-    <link rel="stylesheet" href="product.css">
+    <title>Garden Store</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
+            background: #F5F5F5;
         }
+
+  
         .navbar {
-            background-color: green;
-            padding: 15px;
-            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
         }
-        .navbar div {
-            flex: 1;
-            text-align: center;
-            font-size: 24px;
+
+        .toggle-button {
+            cursor: pointer;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: black;
             font-weight: bold;
         }
+
         .search-bar {
-            flex-grow: 2;
             display: flex;
             align-items: center;
-            position: relative;
+            gap: 10px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
         }
+
         .search-bar input {
-            width: 100%;
-            max-width: 300px;
-            padding: 8px;
-            border-radius: 5px;
             border: none;
-        }
-        .search-button, .refresh-button {
-            background: white;
-            border: none;
+            outline: none;
+            font-size: 14px;
             padding: 8px;
-            cursor: pointer;
-            margin-left: 5px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .toggle-button {
-            position: absolute;
-            right: 15px;
-            cursor: pointer;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            color: black;
-        }
-        .back-button {
-
-            position: absolute;
-
-            left: 15px;
-
-            background: white;
-
-            color: black;
-
-            padding: 8px 12px;
-
-            border-radius: 5px;
-
-            cursor: pointer;
-
-            font-size: 16px;
-
-            text-decoration: none;
-
-        }
-
-        .profile {
-            position: absolute;
-            right: 15px;
-            cursor: pointer;
-            background: white;
-            padding: 10px;
-            border-radius: 50%;
-            color: black;
-        }
-        .menu, .profile-menu {
-            display: none;
-            background: white;
-            position: absolute;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
-        .menu {
-            top: 50px;
-            left: 10px;
             width: 200px;
         }
-        .profile-menu {
-            top: 50px;
-            right: 10px;
-            width: 100px;
+
+        .search-bar button {
+            border: none;
+            background: none;
+            font-size: 18px;
+            cursor: pointer;
         }
-        .menu a, .profile-menu a {
+
+        .back-button {
+            background: white;
+            color: black;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Sidebar Menu */
+        .menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .menu a {
             display: block;
-            padding: 10px;
+            padding: 15px;
             color: black;
             text-decoration: none;
-            text-align: center;
+            font-weight: 600;
+            transition: 0.3s;
         }
-        .menu a:hover, .profile-menu a:hover {
-            background: lightgray;
+
+        .menu a:hover {
+            background: #FF9800;
+            color: white;
         }
+
+     
         .products {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 20px;
+            padding: 100px 20px 20px;
         }
+
         .product-card {
             background: white;
-            padding: 15px;
+            padding: 20px;
             margin: 15px;
             text-align: center;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
             width: 250px;
+            transition: 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
         }
-        .product img {
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
             max-width: 100%;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FF9800;
+        }
+
+   
+        button {
+            border: none;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 15px;
             border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #FF9800;
         }
     </style>
 </head>
 <body>
+
+  
     <div class="navbar">
         <div class="toggle-button" onclick="toggleMenu()">☰ Menu</div>
-        <div>Products</div>
+        <div>🌿 Premium Garden Store</div>
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Search products...">
             <button class="search-button" onclick="searchProducts()">🔍</button>
             <button class="refresh-button" onclick="refreshProducts()">🔄</button>
-        <a href="home.html" class="back-button">←</a>
         </div>
-    <div class="menu" id="menu">
-        <a href="home.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html">Cart</a>
-        <a href="orders.html">Orders</a>
+        <a href="home.html" class="back-button">←</a>
     </div>
+
+ 
+    <div class="menu" id="menu">
+        <a href="home.html">🏠 Home</a>
+        <a href="products.html">🛍️ Products</a>
+        <a href="cart.html">🛒 Cart</a>
+        <a href="orders.html">📦 Orders</a>
+    </div>
+
+  
     <section id="product-list">
         <div class="products">
-       <div class="product"onclick="openProductDetails(1)"><img src="F1.jpg" alt="Morning Jewel Rose"><h3>Morning Jewel Rose Seed</h3><p>₹158</p></div>
-            <div class="product"onclick="openProductDetails(2)"><img src="F2.jpg" alt="Winter Daisy"><h3>Winter Daisy Red Mixed Seed</h3><p>₹150</p></div>
-            <div class="product"onclick="openProductDetails(3)"><img src="F3.jpg" alt="Bitter Gourd"><h3>Bitter Gourd-kareka seed</h3><p>₹99</p></div>
-            <div class="product"onclick="openProductDetails(4)"><img src="F4.jpg" alt="Black Tomato"><h3>Black Tomato</h3><p>₹110</p></div>
-            <div class="product"onclick="openProductDetails(5)"><img src="F5.jpg" alt="Broccoli Seed"><h3>Broccoli Vegetable Seed</h3><p>₹89</p></div>
-            <div class="product"onclick="openProductDetails(6)"><img src="F6.jpg" alt="Brazilian Wood"><h3>Brazilian Wood Plant</h3><p>₹550</p></div>
-            <div class="product"onclick="openProductDetails(7)"><img src="F7.jpg" alt="Apple Plant"><h3>Apple Plant Hybrid</h3><p>₹100</p></div>
-            <div class="product"onclick="openProductDetails(8)"><img src="F8.jpg" alt="Cabbage Seed"><h3>Cabbage Seed</h3><p>₹110</p></div>
-            <div class="product"onclick="openProductDetails(9)"><img src="F9.jpg" alt="Chinese Cabbage"><h3>Chinese Cabbage</h3><p>₹111</p></div>
-            <div class="product"onclick="openProductDetails(10)"><img src="F10.jpg" alt="Amaranthus"><h3>Amaranthus Vegetable Seed</h3><p>₹130</p></div>
-            <div class="product"onclick="openProductDetails(11)"><img src="F11.jpg" alt="Cauliflower"><h3>Farm Cauliflower Violetto</h3><p>₹120</p></div>
-            <div class="product"onclick="openProductDetails(12)"><img src="F12.jpg" alt="Kamal Seed"><h3>Kamal Seed(200g)</h3><p>₹149</p></div>
-            <div class="product"onclick="openProductDetails(13)"><img src="F13.jpg" alt="Home Decor"><h3>6 Birds Hanging Home Decor</h3><p>₹160</p></div>
-            <div class="product"onclick="openProductDetails(14)"><img src="F14.jpg" alt="Ceramic Pot"><h3>Blue Ceramic Pot</h3><p>₹200</p></div>
-            <div class="product"onclick="openProductDetails(15)"><img src="F15.jpg" alt="Plastic Pot"><h3>Multicolor Plastic Pot</h3><p>₹400</p></div>
-            <div class="product"onclick="openProductDetails(16)"><img src="F16.jpg" alt="Pot Stand"><h3>Signal Bicycle Pot Stand</h3><p>₹199</p></div>
-            <div class="product"onclick="openProductDetails(17)"><img src="F17.jpg" alt="Plastic Flower Pot"><h3>Crystal Shaped Plastic Flower Pot</h3><p>₹299</p></div>
-            <div class="product"onclick="openProductDetails(18)"><img src="F18.jpg" alt="Potting Mix"><h3>Organic Potting Mix</h3><p>₹360</p></div>
-            <div class="product"onclick="openProductDetails(19)"><img src="F19.jpg" alt="Metal Pot Stand"><h3>6 Tier Metal Pot Stand</h3><p>₹999</p></div>
-            <div class="product"onclick="openProductDetails(20)"><img src="F20.jpg" alt="Kalanchoe"><h3>Yellow Kalanchoe Flower Seed</h3><p>₹149</p></div>
-            <div class="product"onclick="openProductDetails(21)"><img src="F21.jpg" alt="sky fruit"><h3>sky fruit Seeds(400g)</h3><p>₹349</p></div>
-            <div class="product"onclick="openProductDetails(22)"><img src="F22.jpg" alt="Bsarkar"><h3>long luki seed(25 per pkt)</h3><p>₹110</p></div>
-            <div class="product"onclick="openProductDetails(23)"><img src="F23.jpg" alt="Castor"><h3>Castor seed(100g)</h3><p>₹169</p></div>
-            <div class="product"onclick="openProductDetails(24)"><img src="F24.jpg" alt="Black Avacodo"><h3>Black Avacodo tree seed(1 per pkt)</h3><p>₹129</p></div>
-            <div class="product"onclick="openProductDetails(25)"><img src="F25.jpg" alt="White cauliflower"><h3>gobhee seeds(10 per pkt)</h3><p>₹129</p></div>
-            <div class="product"onclick="openProductDetails(26)"><img src="F26.jpg" alt="Garden Cress"><h3>Halim seeds(300g)</h3><p>₹270</p></div>
-            <div class="product"onclick="openProductDetails(27)"><img src="F27.jpg" alt="Edible carrot"><h3>carrot seeds(1 per pkt)</h3><p>₹199</p></div>
-            <div class="product"onclick="openProductDetails(28)"><img src="F28.jpg" alt="Green grass"><h3>Green grass seeds(3000 per pkt)</h3><p>₹118</p></div>
-            <div class="product"onclick="openProductDetails(29)"><img src="F29.jpg" alt="Dahlia Flower"><h3>Hybrid dahlia seeds(50 per pkt)</h3><p>₹125</p></div>
-            <div class="product"onclick="openProductDetails(30)"><img src="F30.jpg" alt="Ash gourd"><h3>Ash gourd seeds(40 per pkt)</h3><p>₹159</p></div>
+            <div class="product-card" data-id="1">
+                <img src="F1.jpg" alt="Morning Jewel Rose">
+                <h3>Morning Jewel Rose Seed</h3>
+                <p>₹158</p>
+            </div>
+            <div class="product-card" data-id="2">
+                <img src="F2.jpg" alt="Winter Daisy">
+                <h3>Winter Daisy Red Mixed Seed</h3>
+                <p>₹150</p>
+            </div>
+            <div class="product-card" data-id="3">
+                <img src="F3.jpg" alt="Bitter Gourd">
+                <h3>Bitter Gourd-Karela Seed</h3>
+                <p>₹99</p>
+            </div>
+            <div class="product-card" data-id="4">
+                <img src="F4.jpg" alt="Black Tomato">
+                <h3>Black Tomato</h3>
+                <p>₹110</p>
+            </div>
+            <div class="product-card" data-id="5">
+                <img src="F5.jpg" alt="Broccoli Seed">
+                <h3>Broccoli Vegetable Seed</h3>
+                <p>₹89</p>
+            </div>
         </div>
     </section>
+
     <script>
         function openProductDetails(productId) {
             window.location.href = `productdetails.html?id=${productId}`;
         }
+
         function toggleMenu() {
             var menu = document.getElementById("menu");
             menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
-        function toggleProfileMenu() {
-            var profileMenu = document.getElementById("profile-menu");
-            profileMenu.style.display = profileMenu.style.display === "block" ? "none" : "block";
-        }
-        function logout() {
-            sessionStorage.clear();
-            localStorage.clear();
-            window.location.href = "Login.html";
-        }
+
         function searchProducts() {
             var input = document.getElementById("search-input").value.toLowerCase();
-            var products = document.querySelectorAll(".product");
-            products.forEach(product => {
+            document.querySelectorAll(".product-card").forEach(product => {
                 var name = product.querySelector("h3").innerText.toLowerCase();
                 product.style.display = name.includes(input) ? "block" : "none";
             });
@@ -215,10 +232,17 @@
 
         function refreshProducts() {
             document.getElementById("search-input").value = "";
-            document.querySelectorAll(".product").forEach(product => {
+            document.querySelectorAll(".product-card").forEach(product => {
                 product.style.display = "block";
             });
         }
+
+        document.querySelectorAll(".product-card").forEach(product => {
+            product.addEventListener("click", function () {
+                openProductDetails(this.getAttribute("data-id"));
+            });
+        });
     </script>
+
 </body>
 </html>

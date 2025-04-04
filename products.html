@@ -51,13 +51,35 @@
         }
         .toggle-button {
             position: absolute;
-            left: 15px;
+            right: 15px;
             cursor: pointer;
             background: white;
             padding: 10px;
             border-radius: 5px;
             color: black;
         }
+        .back-button {
+
+            position: absolute;
+
+            left: 15px;
+
+            background: white;
+
+            color: black;
+
+            padding: 8px 12px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            text-decoration: none;
+
+        }
+
         .profile {
             position: absolute;
             right: 15px;
@@ -123,15 +145,13 @@
             <input type="text" id="search-input" placeholder="Search products...">
             <button class="search-button" onclick="searchProducts()">🔍</button>
             <button class="refresh-button" onclick="refreshProducts()">🔄</button>
+        <a href="home.html" class="back-button">←</a>
         </div>
     <div class="menu" id="menu">
         <a href="home.html">Home</a>
         <a href="products.html">Products</a>
         <a href="cart.html">Cart</a>
         <a href="orders.html">Orders</a>
-    </div>
-    <div class="profile-menu" id="profile-menu">
-        <a href="home.html" class="back-button">← Back</a
     </div>
     <section id="product-list">
         <div class="products">

@@ -438,7 +438,7 @@ function displayProductDetails() {
     
     if (product) {
         const productImage = document.getElementById('product-image');
-        productImage.src = `images/${product.image}`;
+        productImage.src = `${product.image}`;
         productImage.alt = product.name;
         
         document.getElementById('product-name').textContent = product.name;

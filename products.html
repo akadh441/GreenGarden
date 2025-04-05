@@ -554,59 +554,137 @@
     </main>
 
     <script>
-        function openProductDetails(productId) {
-            window.location.href = `productdetails.html?id=${productId}`;
-        }
-        
-        // Add to cart functionality
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the card click
-                const productCard = this.closest('.product-card');
-                const productName = productCard.querySelector('.product-title').textContent;
-                const productPrice = productCard.querySelector('.product-price').textContent;
-                
-                alert(`${productName} added to cart! Price: ${productPrice}`);
-                
-                // Here you would normally add to cart logic
-                // For example: addToCart(productId, productName, productPrice);
-            });
+// Cart and Wishlist functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize wishlist buttons
+    updateWishlistButtons();
+    
+    // Add to Cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const productCard = this.closest('.product-card');
+            const product = getProductData(productCard);
+            addToCart(product);
+            showNotification('Product added to cart!');
         });
-        
-        // Wishlist functionality
-        document.querySelectorAll('.wishlist-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the card click
-                const icon = this.querySelector('i');
-                
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    icon.style.color = '#f44336';
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    icon.style.color = '';
-                }
-            });
+    });
+
+    // Wishlist functionality
+    document.querySelectorAll('.wishlist-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const productCard = this.closest('.product-card');
+            toggleWishlist(productCard, this);
         });
-        
-        // Search functionality
-        document.querySelector('.search-bar button').addEventListener('click', function() {
-            const searchTerm = document.querySelector('.search-bar input').value.toLowerCase();
-            const products = document.querySelectorAll('.product-card');
-            
-            products.forEach(product => {
-                const title = product.querySelector('.product-title').textContent.toLowerCase();
-                const category = product.querySelector('.product-category').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || category.includes(searchTerm)) {
-                    product.style.display = 'block';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
+    });
+
+    // Search functionality
+    document.querySelector('.search-bar input').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        filterProducts(searchTerm);
+    });
+
+    // Filter/Sort functionality
+    document.querySelectorAll('.filter-btn').forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+            index === 0 ? filterByCategory() : sortProducts();
         });
-    </script>
-</body>
-</html>
+    });
+});
+
+function getProductData(productCard) {
+    return {
+        title: productCard.querySelector('.product-title').textContent,
+        price: parseFloat(productCard.querySelector('.product-price').textContent.replace('₹', '')),
+        category: productCard.querySelector('.product-category').textContent,
+        image: productCard.querySelector('.product-image').src,
+        quantity: 1
+    };
+}
+
+function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingItem = cart.find(item => item.title === product.title);
+    existingItem ? existingItem.quantity++ : cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function toggleWishlist(productCard, button) {
+    const product = getProductData(productCard);
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const index = wishlist.findIndex(item => item.title === product.title);
+    
+    if (index === -1) {
+        wishlist.push(product);
+        button.innerHTML = '<i class="fas fa-heart"></i>';
+    } else {
+        wishlist.splice(index, 1);
+        button.innerHTML = '<i class="far fa-heart"></i>';
+    }
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+}
+
+function updateWishlistButtons() {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    document.querySelectorAll('.wishlist-btn').forEach(button => {
+        const productCard = button.closest('.product-card');
+        const productTitle = productCard.querySelector('.product-title').textContent;
+        button.innerHTML = wishlist.some(item => item.title === productTitle) ?
+            '<i class="fas fa-heart"></i>' :
+            '<i class="far fa-heart"></i>';
+    });
+}
+
+function filterProducts(searchTerm) {
+    document.querySelectorAll('.product-card').forEach(card => {
+        const title = card.querySelector('.product-title').textContent.toLowerCase();
+        const category = card.querySelector('.product-category').textContent.toLowerCase();
+        card.style.display = (title.includes(searchTerm) || category.includes(searchTerm)) ? 'block' : 'none';
+    });
+}
+
+let currentCategory = 'all';
+function filterByCategory() {
+    const categories = ['all', 'Flower Seeds', 'Vegetable Seeds', 'Plants', 'Fruit Plants'];
+    currentCategory = categories[(categories.indexOf(currentCategory) + 1) % categories.length];
+    
+    document.querySelectorAll('.product-card').forEach(card => {
+        const category = card.querySelector('.product-category').textContent;
+        card.style.display = (currentCategory === 'all' || category === currentCategory) ? 'block' : 'none';
+    });
+}
+
+let sortOrder = 'asc';
+function sortProducts() {
+    const grid = document.querySelector('.products-grid');
+    const cards = Array.from(grid.querySelectorAll('.product-card'));
+    
+    cards.sort((a, b) => {
+        const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('₹', ''));
+        const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('₹', ''));
+        return sortOrder === 'asc' ? priceA - priceB : priceB - priceA;
+    });
+    
+    sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    grid.innerHTML = '';
+    cards.forEach(card => grid.appendChild(card));
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 2000);
+}
+
+function openProductDetails(productId) {
+    // For demonstration - replace with actual product details page logic
+    localStorage.setItem('selectedProduct', productId);
+    window.location.href = `productdetails.html?id=${productId}`;
+}
+</script>

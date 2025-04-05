@@ -178,10 +178,12 @@
             justify-content: center;
         }
 
-        .quantity-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-        }
+.quantity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--white) !important;
+    color: var(--text-light) !important;
+}
 
         .quantity-input {
             width: 60px;
@@ -400,19 +402,39 @@
             { id: 29, name: "Hybrid dahlia seeds(50 per pkt)", price: "₹125", image: "F29.jpg" },
             { id: 30, name: "Ash gourd seeds(40 per pkt), price: "₹159",image:"F30.jpg"},
             ];
+           <script>
+let currentQuantity = 1;
+const quantityInput = document.getElementById('quantity');
 
-                 let currentQuantity = 1;
+function updateQuantity(change) {
+    const newValue = Math.max(1, Math.min(99, currentQuantity + change));
+    currentQuantity = newValue;
+    quantityInput.value = currentQuantity;
+    updateButtonStates();
+}
 
-    function getProductIdFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get("id");
-    }
+function handleManualInput() {
+    let value = parseInt(quantityInput.value) || 1;
+    value = Math.max(1, Math.min(99, value));
+    currentQuantity = value;
+    quantityInput.value = value;
+    updateButtonStates();
+}
 
-    function updateQuantity(change) {
-        const quantityInput = document.getElementById('quantity');
-        currentQuantity = Math.max(1, currentQuantity + change);
-        quantityInput.value = currentQuantity;
-    }
+function updateButtonStates() {
+    document.querySelector('.quantity-btn.minus').disabled = currentQuantity === 1;
+    document.querySelector('.quantity-btn.plus').disabled = currentQuantity === 99;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayProductDetails();
+    quantityInput.addEventListener('change', handleManualInput);
+    quantityInput.addEventListener('input', handleManualInput);
+    updateButtonStates();
+});
+
+<input type="number" id="quantity" class="quantity-input" value="1" min="1" max="99" inputmode="numeric">
+}
 
     function displayProductDetails() {
         const productId = getProductIdFromUrl();

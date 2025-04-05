@@ -432,7 +432,40 @@ document.addEventListener('DOMContentLoaded', () => {
     quantityInput.addEventListener('input', handleManualInput);
     updateButtonStates();
 });
+function displayProductDetails() {
+    const productId = getProductIdFromUrl();
+    const product = products.find(p => p.id.toString() === productId); 
+    
+    if (product) {
+        const productImage = document.getElementById('product-image');
+        productImage.src = `images/${product.image}`;
+        productImage.alt = product.name;
+        
+        document.getElementById('product-name').textContent = product.name;
+        document.getElementById('product-price').textContent = `${product.price}`;
+        
+    
+        document.title = `${product.name} | GreenGarden`;
+    } else {
 
+        
+        document.querySelector(".product-container").innerHTML = `
+            <div class="error-message" style="grid-column: 1/-1; text-align: center; padding: 60px 0;">
+                <h2 style="font-size: 24px; margin-bottom: 16px;">Product not found</h2>
+                <button onclick="window.location.href='products.html'" 
+                        style="padding: 12px 24px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    Browse Products
+                </button>
+            </div>`;
+    }
+}
+
+
+const products = 
+document.getElementById('product-image').onerror = function() {
+    this.src = 'placeholder.jpg'; 
+    this.alt = 'Image not available';
+};
 <input type="number" id="quantity" class="quantity-input" value="1" min="1" max="99" inputmode="numeric">
 }
 
